@@ -48,18 +48,37 @@ void findANDreplace(char* str_l, char* resault_l) {
 
 	strncpy(str1, str, 250);
 	char rep[] = " Неудовлетворительно ";
+	char rep_2[] = "Ладно, тройка!";
 	char str2[250] = {};
 	char ssss[250] = {};
 	char ssll[250] = {};
 	int was_in = 0;
+	int ignore;
+	for (int i = 0; i < strlen(str1); i++) {
+		if ((static_cast<int>(str1[i]) == 52) || (static_cast<int>(str1[i]) == 53)) {
+			memset(str2, 0, sizeof(char) * 250);
+			strncpy(str2, was_in + str1, i - was_in);
+			was_in = i + 1;
+			ignore = i;
+		}
+	}
+	memset(str2, 0, sizeof(char) * 250);
+	was_in = 0;
+
 	for (int i = 0; i < strlen(str1); i++) {
 		if ((static_cast<int>(str1[i]) == 52) || (static_cast<int>(str1[i]) == 53)) {
 			memset(str2, 0, sizeof(char) * 250);
 			strncpy(str2, was_in + str1, i - was_in);
 			strcat(ssss, str2);
 			strcat(ssll, str2);
-			strcat(ssll, rep);
+			if (i == ignore) {
+				strcat(ssll, rep_2);
+			}
+			else {
+				strcat(ssll, rep);
+			}
 			was_in = i + 1;
+
 		}
 	}
 	char sss[100] = {};
